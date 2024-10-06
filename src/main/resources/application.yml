@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: maple-orders-api
+  datasource:
+    url: jdbc:postgresql://db:5432/sugar_shack_maplr_test
+    username: postgres
+    password: postgres
+
+  jpa:
+   hibernate:
+    ddl-auto: create
