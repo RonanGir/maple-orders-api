@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/public/api")
-public class CartController  {
+public class CartController {
 
     private CartItemService itemService;
     private CartService service;
@@ -51,7 +51,7 @@ public class CartController  {
 
     @DeleteMapping("/cart/{id}")
     public ResponseEntity<Void> removeFromCart(
-            @RequestParam Long productId,
+            @RequestParam("productId") Long productId,
             @PathVariable("id") Long cartId
     ) {
         CartModificationDto cartModificationDto = CartModificationDto.builder()
@@ -65,15 +65,21 @@ public class CartController  {
     @PatchMapping("/cart/{id}")
     public ResponseEntity<Void> changeQty(
             @PathVariable("id") Long cartId,
-            @RequestParam Long productId,
-            @RequestParam Integer newQty
+            @RequestParam("productId") Long productId,
+            @RequestParam("newQty") Integer newQty
     ) {
         CartModificationDto cartModificationDto = CartModificationDto.builder()
                 .cartId(cartId)
                 .qty(newQty)
                 .productId(productId)
                 .build();
-        service.addToCart(cartModificationDto);
+
+        if (newQty <= 0) {
+            service.deleteFromCart(cartModificationDto);
+        } else {
+            itemService.changeQuantity(cartModificationDto);
+        }
+
         return ResponseEntity.accepted().build();
     }
 }

@@ -8,7 +8,7 @@ public record CartLineDto(
         @NotNull String image,
         @NotNull String name,
         @NotNull Double price,
-        @NotNull String productId,
+        @NotNull Long productId,
         @NotNull Integer qty
 
 ) {
