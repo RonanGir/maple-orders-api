@@ -29,6 +29,7 @@ public abstract class TransactionEntity extends BaseEntity {
     }
 
     protected TransactionEntity(CustomerEntity customerEntity, Integer quantity, Float totalPrice) {
+        super();
         this.customerEntity = customerEntity;
         this.quantity = quantity;
         this.totalPrice = totalPrice;

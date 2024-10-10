@@ -2,6 +2,7 @@ package com.maplr.test.sugarshack.mapleordersapi.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Data
 @Table(name = "purchase_order")
 @EqualsAndHashCode(callSuper = false)
+@SequenceGenerator(name = "purchase_order_seq", sequenceName = "purchase_order_seq")
 public class OrderEntity extends TransactionEntity {
 
     @OneToMany(mappedBy = "orderEntity")

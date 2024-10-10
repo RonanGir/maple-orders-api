@@ -1,9 +1,6 @@
 package com.maplr.test.sugarshack.mapleordersapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "purchase_order_item")
 @EqualsAndHashCode(callSuper = false)
+@SequenceGenerator(name = "purchase_order_item_seq", sequenceName = "purchase_order_item_seq")
 public class OrderItemEntity extends TransactionEntity {
 
     @ManyToOne

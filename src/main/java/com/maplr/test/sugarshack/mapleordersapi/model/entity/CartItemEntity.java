@@ -1,9 +1,6 @@
 package com.maplr.test.sugarshack.mapleordersapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Immutable;
@@ -13,6 +10,7 @@ import org.hibernate.annotations.Immutable;
 @Data
 @Table(name = "cart_item")
 @EqualsAndHashCode(callSuper = false)
+@SequenceGenerator(name = "cart_item_seq", sequenceName = "cart_item_seq")
 public class CartItemEntity extends TransactionEntity {
 
     @ManyToOne

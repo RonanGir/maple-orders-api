@@ -11,6 +11,7 @@ import org.hibernate.annotations.Immutable;
 @Data
 @Table(name = "product")
 @EqualsAndHashCode(callSuper = false)
+@SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
 public class ProductEntity extends BaseEntity {
 
     @Column(name = "img")

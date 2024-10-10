@@ -1,8 +1,6 @@
 package com.maplr.test.sugarshack.mapleordersapi.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
@@ -12,6 +10,7 @@ import java.time.ZonedDateTime;
 public abstract class BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "created_at", nullable = false)
@@ -20,6 +19,12 @@ public abstract class BaseEntity {
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
 
+
     protected BaseEntity() {
+        if (this.id == null) {
+            this.createdAt = ZonedDateTime.now();
+        }
+        this.updatedAt = ZonedDateTime.now();
     }
+
 }
