@@ -1,3 +1,12 @@
+buildscript {
+	ext {
+		mapstructVersion = '1.6.2'
+		lombokMapstructProcessorBindingVersion = '0.2.0'
+		swaggerVersion = '2.6.0'
+		jpaVersion = '3.3.4'
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0-SNAPSHOT'
@@ -6,6 +15,7 @@ plugins {
 
 group = 'com.maplr.test.sugar-shack'
 version = '0.0.1-SNAPSHOT'
+description = 'A sample maple product order api service'
 
 java {
 	toolchain {
@@ -19,29 +29,70 @@ configurations {
 	}
 }
 
+compileJava {
+	options.compilerArgs += [
+			'-Amapstruct.unmappedTargetPolicy=ERROR',
+			'-Amapstruct.defaultComponentModel=spring',
+	]
+}
+
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// dao
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${jpaVersion}"
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// Swagger
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${swaggerVersion}"
+
+	// mapstruct
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructProcessorBindingVersion}"
+
+	// dev tools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-//	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
-tasks.named('test') {
+// attach the generated folder as source for this project
+sourceSets {
+	main {
+		java {
+			srcDirs "${buildDir}/generated/sources/annotationProcessor/java/main"
+		}
+	}
+}
+
+
+test {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorPath = configurations.annotationProcessor
+	options.encoding = 'UTF-8'
 }
