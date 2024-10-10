@@ -1,4 +1,4 @@
-package com.maplr.test.sugarshack.mapleordersapi.controller.product;
+package com.maplr.test.sugarshack.mapleordersapi.controller;
 
 import com.maplr.test.sugarshack.mapleordersapi.model.dto.CatalogueItemDto;
 import com.maplr.test.sugarshack.mapleordersapi.model.dto.MapleSyrupDto;
