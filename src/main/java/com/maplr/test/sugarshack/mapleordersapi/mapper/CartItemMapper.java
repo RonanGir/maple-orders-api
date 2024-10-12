@@ -1,13 +1,18 @@
 package com.maplr.test.sugarshack.mapleordersapi.mapper;
 
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CartLineDto;
+import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CartItemDto;
 import com.maplr.test.sugarshack.mapleordersapi.model.entity.CartItemEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.util.List;
+import java.util.Set;
 
 @Mapper
-public interface CartItemMapper extends BaseMapper<CartItemEntity, CartLineDto> {
+public interface CartItemMapper extends BaseMapper<CartItemEntity, CartItemDto> {
 
+    @Named("cartItemDtoToEntity")
     @Mapping(source = "dto.productId", target = "id")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
@@ -17,13 +22,24 @@ public interface CartItemMapper extends BaseMapper<CartItemEntity, CartLineDto> 
     @Mapping(target = "productEntity", ignore = true)
     @Mapping(target = "cartEntity", ignore = true)
     @Mapping(target = "status", ignore = true)
-    CartItemEntity dtoToEntity(CartLineDto dto);
+    CartItemEntity dtoToEntity(CartItemDto dto);
 
+    @Named("cartItemEntityToDto")
     @Mapping(source = "entity.productEntity.image", target = "image")
     @Mapping(source = "entity.productEntity.name", target = "name")
     @Mapping(source = "entity.productEntity.price", target = "price")
     @Mapping(source = "entity.productEntity.id", target = "productId")
     @Mapping(source = "entity.quantity", target = "qty")
-    CartLineDto entityToDto(CartItemEntity entity);
+    @Mapping(source = "entity.cartEntity.id", target = "cartId")
+    CartItemDto entityToDto(CartItemEntity entity);
 
+    @Named("cartItemDtosToEntities")
+    default Set<CartItemEntity> dtosToEntities(List<CartItemDto> entities) {
+        return BaseMapper.super.dtosToEntities(entities);
+    }
+
+    @Named("cartItemEntitiesToDtos")
+    default List<CartItemDto> entitiesToDtos(Set<CartItemEntity> entities) {
+        return BaseMapper.super.entitiesToDtos(entities);
+    }
 }

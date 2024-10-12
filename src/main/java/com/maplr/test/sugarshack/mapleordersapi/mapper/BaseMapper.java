@@ -17,6 +17,13 @@ public interface BaseMapper<E, O> {
         return entities.stream().map(this::dtoToEntity).collect(Collectors.toSet());
     }
 
+    default List<O> entitiesToDtos(Set<E> entities) {
+        if (entities == null) {
+            return List.of();
+        }
+        return entities.stream().map(this::entityToDto).toList();
+    }
+
     default List<O> entitiesToDtos(List<E> entities) {
         if (entities == null) {
             return List.of();

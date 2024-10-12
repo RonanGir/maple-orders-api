@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI customOpenApi(@Value("Maple Order Api") String appVersion) {
+    public OpenAPI customOpenApi(@Value("${spring.application.name}") String appVersion) {
         return new OpenAPI()
-                .info(new Info().title("Maple Order Api - services").version(appVersion));
+                .info(new Info().title("Maple Orders Api - services").version(appVersion));
     }
 
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: maple-orders-api
+    name: 0.0.1-SNAPSHOT
   datasource:
     url: jdbc:postgresql://localhost:5432/sugar_shack_maplr_test
     username: ${USER_DB:postgres}
@@ -10,10 +10,11 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
-
 app:
   default:
     tz: "Europe/Paris"
+  api:
+    prefix: "/maple-orders"
 
 springdoc:
   api-docs:

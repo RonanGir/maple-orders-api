@@ -21,4 +21,11 @@ public class OrderEntity extends TransactionEntity {
     @OneToMany(mappedBy = "orderEntity")
     private Set<OrderItemEntity> orderItemEntities;
 
+    public OrderEntity() {
+    }
+
+    public OrderEntity(CustomerEntity customerEntity, Integer quantity, Float totalPrice, Set<OrderItemEntity> orderItemEntities) {
+        super(customerEntity, quantity, totalPrice);
+        this.orderItemEntities = orderItemEntities;
+    }
 }

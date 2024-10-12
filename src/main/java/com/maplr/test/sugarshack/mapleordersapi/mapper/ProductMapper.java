@@ -1,17 +1,24 @@
 package com.maplr.test.sugarshack.mapleordersapi.mapper;
 
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.CatalogueItemDto;
+import com.maplr.test.sugarshack.mapleordersapi.model.dto.product.CatalogueItemDto;
+import com.maplr.test.sugarshack.mapleordersapi.model.dto.product.ProductDto;
 import com.maplr.test.sugarshack.mapleordersapi.model.entity.ProductEntity;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.util.List;
 
 @Mapper
-public interface ProductMapper extends BaseMapper<ProductEntity, CatalogueItemDto> {
+public interface ProductMapper extends BaseMapper<ProductEntity, ProductDto> {
 
-    @Mapping(target = "description", ignore = true)
-    @Mapping(target = "stock", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    ProductEntity dtoToEntity(CatalogueItemDto dto);
+    @Named("productEntityToDto")
+    ProductDto entityToDto(ProductEntity entity);
+
+    @Named("entityToCatalogueItemDto")
+    CatalogueItemDto entityToCatalogueItemDto(ProductEntity entity);
+
+    @IterableMapping(qualifiedByName = "entityToCatalogueItemDto")
+    List<CatalogueItemDto> entitiesToCatalogueItemDtos(List<ProductEntity> entities);
 
 }

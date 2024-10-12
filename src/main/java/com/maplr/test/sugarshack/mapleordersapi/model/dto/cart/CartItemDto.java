@@ -4,11 +4,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record CartLineDto(
+public record CartItemDto(
         @NotNull String image,
         @NotNull String name,
         @NotNull Double price,
         @NotNull Long productId,
+        @NotNull Long cartId,
         @NotNull Integer qty
 
 ) {

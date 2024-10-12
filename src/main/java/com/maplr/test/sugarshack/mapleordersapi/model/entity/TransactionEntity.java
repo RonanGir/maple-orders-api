@@ -33,6 +33,6 @@ public abstract class TransactionEntity extends BaseEntity {
         this.customerEntity = customerEntity;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.status = TransactionEnum.CLOSED;
+        this.status = TransactionEnum.OPENED;
     }
 }

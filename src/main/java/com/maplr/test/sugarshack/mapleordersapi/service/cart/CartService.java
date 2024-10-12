@@ -7,8 +7,9 @@ import com.maplr.test.sugarshack.mapleordersapi.model.entity.CustomerEntity;
 import com.maplr.test.sugarshack.mapleordersapi.repository.CartItemRepository;
 import com.maplr.test.sugarshack.mapleordersapi.repository.CartRepository;
 import com.maplr.test.sugarshack.mapleordersapi.repository.ProductRepository;
+import com.maplr.test.sugarshack.mapleordersapi.service.CrudService;
 import com.maplr.test.sugarshack.mapleordersapi.service.CustomerService;
-import com.maplr.test.sugarshack.mapleordersapi.service.PriceCalculator;
+import com.maplr.test.sugarshack.mapleordersapi.service.PriceCalculatorService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CartService {
+public class CartService extends CrudService<CartEntity, Long> {
 
     private final CartRepository repository;
     private final ProductRepository productRepository;
-    private final PriceCalculator priceCalculator;
+    private final PriceCalculatorService priceCalculator;
     private final CustomerService customerService;
     private final CartItemService cartItemService;
     private final CartItemRepository itemRepository;
@@ -31,10 +32,11 @@ public class CartService {
             CartRepository repository,
             CartItemRepository itemRepository,
             ProductRepository productRepository,
-            PriceCalculator priceCalculator,
+            PriceCalculatorService priceCalculator,
             CustomerService customerService,
             CartItemService cartItemService
     ) {
+        super(repository);
         this.repository = repository;
         this.itemRepository = itemRepository;
         this.productRepository = productRepository;
@@ -60,6 +62,7 @@ public class CartService {
                 optionalCartEntity.ifPresent(cartEntity -> productRepository.findById(cartModificationDto.productId())
                         .ifPresent(productEntity -> {
                             Float totalPrice = priceCalculator.calcPrice(cartModificationDto.qty(), productEntity.getPrice());
+
                             CartItemEntity newItem = new CartItemEntity(productEntity, cartEntity, customer, cartModificationDto.qty(), totalPrice.floatValue());
                             itemRepository.save(newItem);
                         }));

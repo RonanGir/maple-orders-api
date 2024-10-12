@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItemEntity, Long> {
 
-    List<CartItemEntity> findAllByCartEntityId(Long id);
+    List<CartItemEntity> findAllByCartEntityIdOrderByProductEntityName(Long id);
 
     void deleteByCartEntityIdAndProductEntityId(Long cartId, Long productId);
 
