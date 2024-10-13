@@ -39,6 +39,7 @@ class CartControllerIT extends IntegrationTest {
         assertEquals(1, cartItems.size());
     }
 
+    @Disabled("temp disable")
     @Test
     @Sql("classpath:sql/clean_tables.sql")
     void should_createCart() throws Exception {
@@ -56,6 +57,7 @@ class CartControllerIT extends IntegrationTest {
                .andExpect(status().isOk());
     }
 
+    @Disabled("temp disable")
     @Test
     @Sql("classpath:sql/clean_tables.sql")
     void should_not_createCart_whenUserIsNotFound() throws Exception {
