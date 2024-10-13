@@ -19,7 +19,7 @@ public abstract class CrudService<T, I> {
 
     public T findById(I id) throws EntityNotFoundException {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Entity with id " + id + " not found"));
+                         .orElseThrow(() -> new EntityNotFoundException("Entity with id " + id + " not found"));
     }
 
     public void deleteById(I id) {
@@ -38,7 +38,7 @@ public abstract class CrudService<T, I> {
         if (repository.existsById(id)) {
             return this.save(entity);
         } else {
-            throw new IllegalArgumentException("Entity with id " + id + " not found");
+            throw new EntityNotFoundException("Entity with id " + id + " not found");
         }
     }
 }

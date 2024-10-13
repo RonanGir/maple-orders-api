@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public interface BaseMapper<E, O> {
-
+    
     O entityToDto(E entity);
 
     E dtoToEntity(O dto);

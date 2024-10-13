@@ -11,11 +11,13 @@ import com.maplr.test.sugarshack.mapleordersapi.service.CrudService;
 import com.maplr.test.sugarshack.mapleordersapi.service.CustomerService;
 import com.maplr.test.sugarshack.mapleordersapi.service.PriceCalculatorService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class CartService extends CrudService<CartEntity, Long> {
 
@@ -46,26 +48,27 @@ public class CartService extends CrudService<CartEntity, Long> {
     }
 
     public void addToCart(CartModificationDto cartModificationDto) {
+        log.info("[addToCart] begin with productId={} and cartId={}", cartModificationDto.productId(), cartModificationDto.cartId());
         CartItemEntity cartItemEntity = itemRepository.findByCartEntityIdAndProductEntityId(cartModificationDto.cartId(), cartModificationDto.productId());
         if (cartItemEntity != null) {
             CartModificationDto updatedCartChange = CartModificationDto.builder()
-                    .qty(cartItemEntity.getQuantity() + cartModificationDto.qty())
-                    .productId(cartModificationDto.productId())
-                    .cartId(cartModificationDto.cartId())
-                    .build();
+                                                                       .qty(cartItemEntity.getQuantity() + cartModificationDto.qty())
+                                                                       .productId(cartModificationDto.productId())
+                                                                       .cartId(cartModificationDto.cartId())
+                                                                       .build();
             cartItemService.changeQuantity(updatedCartChange);
         } else {
-            // set default costumer
+
             CustomerEntity customer = customerService.findById(cartModificationDto.userId());
             if (customer != null) {
                 Optional<CartEntity> optionalCartEntity = repository.findById(cartModificationDto.cartId());
-                optionalCartEntity.ifPresent(cartEntity -> productRepository.findById(cartModificationDto.productId())
-                        .ifPresent(productEntity -> {
-                            Float totalPrice = priceCalculator.calcPrice(cartModificationDto.qty(), productEntity.getPrice());
-
-                            CartItemEntity newItem = new CartItemEntity(productEntity, cartEntity, customer, cartModificationDto.qty(), totalPrice.floatValue());
-                            itemRepository.save(newItem);
-                        }));
+                optionalCartEntity.ifPresent(cartEntity -> {
+                    productRepository.findById(cartModificationDto.productId()).ifPresent(productEntity -> {
+                        Float totalPrice = priceCalculator.calcPrice(cartModificationDto.qty(), productEntity.getPrice());
+                        CartItemEntity newItem = new CartItemEntity(productEntity, cartEntity, customer, cartModificationDto.qty(), totalPrice);
+                        itemRepository.save(newItem);
+                    });
+                });
             }
         }
 

@@ -4,6 +4,9 @@ buildscript {
         lombokMapstructProcessorBindingVersion = '0.2.0'
         swaggerVersion = '2.6.0'
         jpaVersion = '3.3.4'
+        mockitoVersion = '5.14.1'
+        jacksonVersion = '2.18.0'
+        log4jVersion = '2.0.16'
     }
 }
 
@@ -46,6 +49,7 @@ repositories {
 dependencies {
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     // dao
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${jpaVersion}"
@@ -55,10 +59,14 @@ dependencies {
     // Swagger
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${swaggerVersion}"
 
+    // Log
+    implementation "org.slf4j:slf4j-api:${log4jVersion}"
+
+
     // mapstruct
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "org.mapstruct:mapstruct-jdk8:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     // lombok
     compileOnly 'org.projectlombok:lombok'
@@ -71,6 +79,7 @@ dependencies {
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
@@ -91,4 +100,9 @@ test {
 tasks.withType(JavaCompile) {
     options.annotationProcessorPath = configurations.annotationProcessor
     options.encoding = 'UTF-8'
+}
+
+clean.doLast {
+    // clean-up directory when necessary
+    file(new File(projectDir, "/generated")).deleteDir()
 }
