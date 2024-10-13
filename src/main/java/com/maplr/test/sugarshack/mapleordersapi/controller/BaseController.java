@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class BaseController<O, T, I> {
+public abstract class BaseController<O, T, I> {
 
     protected CrudService<T, I> service;
     protected BaseMapper<T, O> mapper;

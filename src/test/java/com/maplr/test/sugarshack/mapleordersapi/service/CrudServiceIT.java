@@ -5,6 +5,7 @@ import com.maplr.test.sugarshack.mapleordersapi.testconfig.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import static com.maplr.test.sugarshack.mapleordersapi.testconfig.TestConstant.g
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Sql(value = {"classpath:sql/clean_tables.sql", "classpath:sql/fake_data.sql"})
 class CrudServiceIT extends IntegrationTest {
 
     @Qualifier("productService")
@@ -32,9 +34,9 @@ class CrudServiceIT extends IntegrationTest {
 
     @Test
     void should_deleteById() {
-        crudService.deleteById(4L);
+        crudService.deleteById(1L);
         List<ProductEntity> productEntities = crudService.findAll();
-        assertThat(productEntities).filteredOn(productEntity -> productEntity.getId() == 4L).isEmpty();
+        assertThat(productEntities).filteredOn(productEntity -> productEntity.getId() == 1L).isEmpty();
     }
 
     @Test
