@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/sugar_shack_maplr_test
+    username: ${USER_DB:postgres}
+    password: ${PASSWORD_DB:postgres}
