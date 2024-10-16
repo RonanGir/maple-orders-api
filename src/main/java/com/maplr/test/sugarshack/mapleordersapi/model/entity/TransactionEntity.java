@@ -2,10 +2,12 @@ package com.maplr.test.sugarshack.mapleordersapi.model.entity;
 
 import com.maplr.test.sugarshack.mapleordersapi.model.enums.TransactionEnum;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = false)
 public abstract class TransactionEntity extends BaseEntity {
@@ -29,7 +31,7 @@ public abstract class TransactionEntity extends BaseEntity {
     }
 
     protected TransactionEntity(CustomerEntity customerEntity, Integer quantity, Float totalPrice) {
-        super();
+        super(null);
         this.customerEntity = customerEntity;
         this.quantity = quantity;
         this.totalPrice = totalPrice;

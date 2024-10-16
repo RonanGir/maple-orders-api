@@ -10,8 +10,12 @@ import org.hibernate.annotations.Immutable;
 @Data
 @Table(name = "cart_item")
 @EqualsAndHashCode(callSuper = false)
-@SequenceGenerator(name = "cart_item_seq", sequenceName = "cart_item_seq")
 public class CartItemEntity extends TransactionEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_item_seq_gen")
+    @SequenceGenerator(name = "cart_item_seq_gen", sequenceName = "cart_item_seq", allocationSize = 1)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -24,6 +28,7 @@ public class CartItemEntity extends TransactionEntity {
     public CartItemEntity() {
         super();
     }
+
     public CartItemEntity(
             ProductEntity productEntity,
             CartEntity cartEntity,
@@ -31,7 +36,7 @@ public class CartItemEntity extends TransactionEntity {
             Integer quantity,
             Float totalPrice
     ) {
-        super(customerEntity, quantity,totalPrice);
+        super(customerEntity, quantity, totalPrice);
         this.productEntity = productEntity;
         this.cartEntity = cartEntity;
     }
