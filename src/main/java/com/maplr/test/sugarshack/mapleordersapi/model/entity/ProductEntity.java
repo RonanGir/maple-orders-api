@@ -40,4 +40,7 @@ public class ProductEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MapleSyrupTypeEnum type;
 
+    public ProductEntity() {
+        super(null);
+    }
 }

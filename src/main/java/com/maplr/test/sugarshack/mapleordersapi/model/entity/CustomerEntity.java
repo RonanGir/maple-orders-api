@@ -18,4 +18,8 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    public CustomerEntity() {
+        super(null);
+    }
+
 }

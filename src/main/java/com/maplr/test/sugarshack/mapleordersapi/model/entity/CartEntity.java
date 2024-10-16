@@ -19,5 +19,5 @@ public class CartEntity extends TransactionEntity {
 
     @OneToMany(mappedBy = "cartEntity")
     private Set<CartItemEntity> cartItemEntities;
-
+    
 }
