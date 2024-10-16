@@ -44,7 +44,4 @@ public class WebConfig implements WebMvcConfigurer {
 
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }
-
-
-    // add interceptor
 }

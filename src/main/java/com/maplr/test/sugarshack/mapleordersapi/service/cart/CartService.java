@@ -10,6 +10,7 @@ import com.maplr.test.sugarshack.mapleordersapi.repository.ProductRepository;
 import com.maplr.test.sugarshack.mapleordersapi.service.CrudService;
 import com.maplr.test.sugarshack.mapleordersapi.service.CustomerService;
 import com.maplr.test.sugarshack.mapleordersapi.service.PriceCalculatorService;
+import com.maplr.test.sugarshack.mapleordersapi.service.StockValidatorService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class CartService extends CrudService<CartEntity, Long> {
     private final CustomerService customerService;
     private final CartItemService cartItemService;
     private final CartItemRepository itemRepository;
+    private final StockValidatorService stockValidatorService;
 
 
     @Autowired
@@ -36,7 +38,8 @@ public class CartService extends CrudService<CartEntity, Long> {
             ProductRepository productRepository,
             PriceCalculatorService priceCalculator,
             CustomerService customerService,
-            CartItemService cartItemService
+            CartItemService cartItemService,
+            StockValidatorService stockValidatorService
     ) {
         super(repository);
         this.repository = repository;
@@ -45,6 +48,7 @@ public class CartService extends CrudService<CartEntity, Long> {
         this.priceCalculator = priceCalculator;
         this.customerService = customerService;
         this.cartItemService = cartItemService;
+        this.stockValidatorService = stockValidatorService;
     }
 
     public void addToCart(CartModificationDto cartModificationDto) {
@@ -64,9 +68,11 @@ public class CartService extends CrudService<CartEntity, Long> {
                 Optional<CartEntity> optionalCartEntity = repository.findById(cartModificationDto.cartId());
                 optionalCartEntity.ifPresent(cartEntity -> {
                     productRepository.findById(cartModificationDto.productId()).ifPresent(productEntity -> {
-                        Float totalPrice = priceCalculator.calcPrice(cartModificationDto.qty(), productEntity.getPrice());
-                        CartItemEntity newItem = new CartItemEntity(productEntity, cartEntity, customer, cartModificationDto.qty(), totalPrice);
-                        itemRepository.save(newItem);
+                        if (stockValidatorService.canOrder(productEntity, cartModificationDto)) {
+                            Float totalPrice = priceCalculator.calcPrice(cartModificationDto.qty(), productEntity.getPrice());
+                            CartItemEntity newItem = new CartItemEntity(productEntity, cartEntity, customer, cartModificationDto.qty(), totalPrice);
+                            itemRepository.save(newItem);
+                        }
                     });
                 });
             }
