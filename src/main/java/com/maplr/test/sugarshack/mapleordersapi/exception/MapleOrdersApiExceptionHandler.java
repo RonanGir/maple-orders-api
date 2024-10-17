@@ -8,14 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @Slf4j
 @RestControllerAdvice
-public class MapleOrdersApiExceptionHandler {
+public class MapleOrdersApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OutOfStockException.class)
     public ResponseEntity<MaplOrdersApiException> handleOutOfStockException(OutOfStockException ex) {
-        log.error("EntityNotFoundException: {}", ex.getMessage());
+        log.error("OutOfStockException: {}", ex.getMessage());
         MaplOrdersApiException appException = MaplOrdersApiException.builder()
                                                                     .status(HttpStatus.BAD_REQUEST.value())
                                                                     .technicalMessage(ex.getMessage())
