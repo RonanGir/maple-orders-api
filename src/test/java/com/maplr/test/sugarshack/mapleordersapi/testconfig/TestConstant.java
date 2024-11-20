@@ -1,7 +1,7 @@
 package com.maplr.test.sugarshack.mapleordersapi.testconfig;
 
-import com.maplr.test.sugarshack.mapleordersapi.model.entity.ProductEntity;
-import com.maplr.test.sugarshack.mapleordersapi.model.enums.MapleSyrupTypeEnum;
+import com.maplr.test.sugarshack.mapleordersapi.product.MapleSyrupTypeEnum;
+import com.maplr.test.sugarshack.mapleordersapi.product.ProductEntity;
 
 public class TestConstant {
 

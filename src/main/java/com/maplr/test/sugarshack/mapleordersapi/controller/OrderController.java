@@ -1,12 +1,8 @@
 package com.maplr.test.sugarshack.mapleordersapi.controller;
 
-import com.maplr.test.sugarshack.mapleordersapi.mapper.BaseMapper;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.order.OrderDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.order.OrderLineDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.order.OrderValidationResponseDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.entity.OrderEntity;
-import com.maplr.test.sugarshack.mapleordersapi.service.CrudService;
-import com.maplr.test.sugarshack.mapleordersapi.service.OrderService;
+import com.maplr.test.sugarshack.mapleordersapi.common.BaseMapper;
+import com.maplr.test.sugarshack.mapleordersapi.common.CrudService;
+import com.maplr.test.sugarshack.mapleordersapi.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

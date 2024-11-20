@@ -1,9 +1,9 @@
 package com.maplr.test.sugarshack.mapleordersapi.controller;
 
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.product.CatalogueItemDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.product.MapleSyrupDto;
-import com.maplr.test.sugarshack.mapleordersapi.service.product.ProductDetailService;
-import com.maplr.test.sugarshack.mapleordersapi.service.product.ProductService;
+import com.maplr.test.sugarshack.mapleordersapi.product.CatalogueItemDto;
+import com.maplr.test.sugarshack.mapleordersapi.product.MapleSyrupDto;
+import com.maplr.test.sugarshack.mapleordersapi.product.ProductDetailService;
+import com.maplr.test.sugarshack.mapleordersapi.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

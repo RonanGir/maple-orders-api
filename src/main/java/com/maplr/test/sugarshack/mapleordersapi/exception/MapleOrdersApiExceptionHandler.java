@@ -1,7 +1,6 @@
 package com.maplr.test.sugarshack.mapleordersapi.exception;
 
-import com.maplr.test.sugarshack.mapleordersapi.exception.dto.MaplOrdersApiException;
-import com.maplr.test.sugarshack.mapleordersapi.exception.dto.OutOfStockException;
+import com.maplr.test.sugarshack.mapleordersapi.inventory.OutOfStockException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

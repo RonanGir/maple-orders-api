@@ -1,17 +1,12 @@
 package com.maplr.test.sugarshack.mapleordersapi.controller;
 
-import com.maplr.test.sugarshack.mapleordersapi.mapper.CartMapper;
-import com.maplr.test.sugarshack.mapleordersapi.mapper.CustomerMapper;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.CustomerDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CartDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CartItemDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CartModificationDto;
-import com.maplr.test.sugarshack.mapleordersapi.model.dto.cart.CreateCartRequest;
-import com.maplr.test.sugarshack.mapleordersapi.model.entity.CartEntity;
-import com.maplr.test.sugarshack.mapleordersapi.model.enums.TransactionEnum;
-import com.maplr.test.sugarshack.mapleordersapi.service.CustomerService;
-import com.maplr.test.sugarshack.mapleordersapi.service.cart.CartItemService;
-import com.maplr.test.sugarshack.mapleordersapi.service.cart.CartService;
+import com.maplr.test.sugarshack.mapleordersapi.cart.*;
+import com.maplr.test.sugarshack.mapleordersapi.cart.item.CartItemDto;
+import com.maplr.test.sugarshack.mapleordersapi.cart.item.CartItemService;
+import com.maplr.test.sugarshack.mapleordersapi.common.TransactionEnum;
+import com.maplr.test.sugarshack.mapleordersapi.customer.CustomerDto;
+import com.maplr.test.sugarshack.mapleordersapi.customer.CustomerMapper;
+import com.maplr.test.sugarshack.mapleordersapi.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +57,7 @@ public class CartController extends BaseController<CartDto, CartEntity, Long> {
                                  .totalPrice(0f)
                                  .customerDto(customerDto)
                                  .build();
-        
+
         return super.create(cartDto);
 
     }

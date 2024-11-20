@@ -1,7 +1,7 @@
 package com.maplr.test.sugarshack.mapleordersapi.controller;
 
-import com.maplr.test.sugarshack.mapleordersapi.mapper.BaseMapper;
-import com.maplr.test.sugarshack.mapleordersapi.service.CrudService;
+import com.maplr.test.sugarshack.mapleordersapi.common.BaseMapper;
+import com.maplr.test.sugarshack.mapleordersapi.common.CrudService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 
